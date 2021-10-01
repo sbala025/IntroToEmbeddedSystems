@@ -14,15 +14,17 @@
 #endif
 
 int main(void) {
-    /* Insert DDR and PORT initializations */
+    /* Configure A and B */
+    DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
     DDRB = 0xFF; PORTB = 0x00; // Configure port B's 8 pins as outputs
     // Initialize output on PORTB to 0x00
-
+    //unsigned char tmpA = 0x00; // Temp hold value of A
+    //unsigned char tmpB = 0x00; // Temp hold value of B
 				
     /* Insert your solution below */
-    while (1) {
-	PORTB = 0x0F;	// Writes port B's 8 pins with the values
-				// on port A's 8 pins
+    if(PORTA == 0x01) {
+	PORTB = 0x01;	
+				
     }
     return 1;
 }
