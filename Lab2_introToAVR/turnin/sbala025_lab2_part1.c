@@ -18,13 +18,14 @@ int main(void) {
     DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
     DDRB = 0xFF; PORTB = 0x00; // Configure port B's 8 pins as outputs
     // Initialize output on PORTB to 0x00
-    //unsigned char tmpA = 0x00; // Temp hold value of A
-    //unsigned char tmpB = 0x00; // Temp hold value of B
+    //unsigned char input = 0x00; // Temp hold value of A
+    //unsigned char output = 0x00; // Temp hold value of B
 				
     /* Insert your solution below */
-    if(PORTA == 0x01) {
-	PORTB = 0x01;	
-				
+    while(1){
+         if(PORTA == 0x01) {
+	      PORTB = 0x01;					
+         }
     }
     return 1;
 }
