@@ -39,6 +39,32 @@ expectPORTC 0
 checkResult
 
 # Add tests below
+#
+# Tests for Lab 2 Part 1
+test "PINA: 0x00 => PINB:0x00"
+setPINA 0x00
+continue 2
+expectPORTB 0x00
+checkResult
+
+test "PINA: 0x01 => PINB:0x00"
+setPINA 0x01
+continue 2
+expectPORTB 0x01
+checkResult
+
+test "PINA: 0x02 => PINB:0x00"
+setPINA 0x02
+continue 2
+expectPORTB 0x00
+checkResult
+
+test "PINA: 0x03 => PINB:0x00"
+setPINA 0x03
+continue 2
+expectPORTB 0x00
+checkResult
+
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
