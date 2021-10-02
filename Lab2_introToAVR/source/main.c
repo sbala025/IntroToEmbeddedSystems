@@ -19,15 +19,26 @@ int main(void) {
     DDRB = 0xFF; PORTB = 0x00; // Configure port B's 8 pins as outputs
     // Initialize output on PORTB to 0x00
     unsigned char input = 0x00; // Temp hold value of A
-    //unsigned char output = 0x00; // Temp hold value of B
+    //unsigned char cntavail = 0x00; // Temp hold value of B
     input = PORTA;				
     /* Insert your solution below */
     while(1){
          input = PINA;
-         if(input == 0x00) {
-	      PORTC = 0x04;					
+         if(input == 0x00) {//every thing full
+	      PORTC = 0x00;					
          }
-	else if(input == 0x0D ||
+	else if(input == 0x07 || input ==0x0B || input == 0x0D || input == 0x0E){ //three spots are full
+	     PORTC = 0x01;
+	}
+	else if(input == 0x03 || input == 0x05 || input == 0x06 || input == 0x09 || input == 0x0A || input == 0x0C){ //two spots are full
+    	     PORTC = 0x02;
+	}
+	else if (input == 0x01 || input == 0x02 || input == 0x04 || input == 0x08){//one spot is full
+	     PORTC = 0x03;
+	}
+	else{
+	     PORTC = 0x04;
+	}
     }
     return 1;
 }
