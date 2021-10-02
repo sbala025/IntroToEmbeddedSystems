@@ -8,40 +8,50 @@
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
  */
+#include <stdlib.h>
 #include <avr/io.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
 
 int main(void) {
-    /* Configure A and C */
+    /* Configure A, B, and C */
     DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
-    DDRC = 0xFF; PORTC = 0x00; // Configure port B's 8 pins as outputs
+    DDRB = 0x00; PORTB = 0xFF; // Configure port B's 8 pins as inputs
+    DDRC = 0x00; PORTC = 0xFF; // Configure port C's 8 pins as inputs
+    DDRD = 0xFF; PORTD = 0x00; // Configure port D's 8 pins as outputs
    
-    unsigned char input = PORTA; //initialize PORTA
-    unsigned char cntavail = 0x00; // initialize cntavail
+    unsigned char inputA = PORTA; //initialize PORTA
+    unsigned char inputB = PORTB; //initialize PORTB
+    unsigned char inputC = PORTC; //initialize PORTC
+    unsigned char balanced = 0x00; //initialize to zero 
+    unsigned char limit = 0x00; //initialize to zero 
+    unsigned char totalweight = 0x00; // initialize totalweight
    				
     /* Insert your solution below */
     while(1){
-         input = PINA;
-         if(input == 0x00) {//every thing full
-	      PORTC = 0x80;					
-        }
-	//three spots are full
-	else if(input == 0x07 || input ==0x0B || input == 0x0D || input == 0x0E){ //three spots are full
-	     PORTC = cntavail+1;
+        inputA = PINA;
+	inputB = PINB;
+	inputC = PINC;
+	balanced = 0x00; //must always start at 0
+	limit = 0x00; //must always start at 0
+	outputD = 0x00; // must always start at 0
+
+	//Find total weight and reduce to 6 most important bits
+	totalweight = inputA + inputB + inputC;
+				
+	//Check if total weight exceed max limit (140) --> D0
+	if(totalweight > 140){
+		limit = 0x01;
 	}
-	//two spots are full
-	else if(input == 0x03 || input == 0x05 || input == 0x06 || input == 0x09 || input == 0x0A || input == 0x0C){ //two spots are full
-    	     PORTC = cntavail+2;
+
+	//Check if ride is balanced --> D1
+	if(abs(inputA - inputB) > 0x8C){
+		balanced = 0x02;
 	}
-	//one spot is full
-	else if (input == 0x01 || input == 0x02 || input == 0x04 || input == 0x08){//one spot is full
-	     PORTC = cntavail+3;
-	}
-	else{
-	     PORTC = cntavail+4;
-	}
+	
+	//Combine into one
+	PORTD = totalweight | limit | balanced;	
     }
     return 1;
 }
