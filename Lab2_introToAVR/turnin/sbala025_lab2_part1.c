@@ -23,7 +23,7 @@ int main(void) {
 				
     /* Insert your solution below */
     while(1){
-         if(((input & 0x01)  == 0x01) && ((input & 0x02)  == 0x00)) {
+         if((input & 0x01)  == 0x01) {
 	      PORTB = 0x01;					
          }
 	else{
