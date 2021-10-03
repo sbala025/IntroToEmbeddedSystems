@@ -35,7 +35,7 @@ int main(void) {
 	inputC = PINC;
 	balanced = 0x00; //must always start at 0
 	limit = 0x00; //must always start at 0
-	outputD = 0x00; // must always start at 0
+	totalweight = 0x00; // must always start at 0
 
 	//Find total weight and reduce to 6 most important bits
 	totalweight = inputA + inputB + inputC;
