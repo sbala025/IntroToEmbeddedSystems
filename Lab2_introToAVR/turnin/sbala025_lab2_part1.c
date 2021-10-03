@@ -23,7 +23,7 @@ int main(void) {
 				
     /* Insert your solution below */
     while(1){
-         if(PORTA == 0x01) {
+         if(((PINA & 0x01)  == 0x01) && ((PINA & 0x02)  == 0x00)) {
 	      PORTB = 0x01;					
          }
     }
