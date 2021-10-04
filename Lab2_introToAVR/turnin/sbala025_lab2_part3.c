@@ -24,7 +24,8 @@ int main(void) {
     /* Insert your solution below */
     while(1){
          input = PINA;
-	unsigned char cntavail = 0x00; // initialize cntavail
+	 input = input &0x0F; 
+	 unsigned char cntavail = 0x00; // initialize cntavail
          if(input == 0x00) {//every thing full
 	      PORTC = cntavail+4;					
         }
