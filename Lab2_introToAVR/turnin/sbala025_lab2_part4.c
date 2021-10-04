@@ -26,7 +26,7 @@ int main(void) {
     unsigned char inputC = PORTC; //initialize PORTC
     unsigned char balanced = 0x00; //initialize to zero 
     unsigned char limit = 0x00; //initialize to zero 
-    unsigned char totalweight = 0x00; // initialize totalweight
+    unsigned short totalweight = 0x0000; // initialize totalweight
    				
     /* Insert your solution below */
     while(1){
@@ -39,6 +39,7 @@ int main(void) {
 
 	//Find total weight and reduce to 6 most important bits
 	totalweight = inputA + inputB + inputC;
+
 				
 	//Check if total weight exceed max limit (140) --> D0
 	if(totalweight > 140){
@@ -49,6 +50,9 @@ int main(void) {
 	if(abs(inputA - inputB) > 0x8C){
 		balanced = 0x02;
 	}
+	
+	//Convert weight to be only six bits 0x0000 --> 0x00XX
+	totalweight = totalweight & 0x00FC;
 	
 	//Combine into one
 	PORTD = totalweight | limit | balanced;	
