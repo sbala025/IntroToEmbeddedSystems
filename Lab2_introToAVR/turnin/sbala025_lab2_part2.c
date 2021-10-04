@@ -26,7 +26,7 @@ int main(void) {
 	 unsigned char input = PORTA; //initialize PORTA
     	 unsigned char cntavail = 0x00; // initialize cntavail
          input = PINA;
-         if(input == 0x00) {//every thing full
+         if(input == 0x00|| (input&&0x00)==0x00) {//every thing full
 	      PORTC = cntavail+4;					
         }
 	//three spots are full
