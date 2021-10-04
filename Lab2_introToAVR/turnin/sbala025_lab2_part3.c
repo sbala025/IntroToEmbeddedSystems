@@ -19,13 +19,14 @@ int main(void) {
     DDRC = 0xFF; PORTC = 0x00; // Configure port B's 8 pins as outputs
    
     unsigned char input = PORTA; //initialize PORTA
-    unsigned char cntavail = 0x00; // initialize cntavail
+    //unsigned char cntavail = 0x00; // initialize cntavail
    				
     /* Insert your solution below */
     while(1){
          input = PINA;
+	unsigned char cntavail = 0x00; // initialize cntavail
          if(input == 0x00) {//every thing full
-	      PORTC = 0x80;					
+	      PORTC = cntavail+4;					
         }
 	//three spots are full
 	else if(input == 0x07 || input ==0x0B || input == 0x0D || input == 0x0E){ //three spots are full
@@ -40,7 +41,7 @@ int main(void) {
 	     PORTC = cntavail+3;
 	}
 	else{
-	     PORTC = cntavail+4;
+	     PORTC = 0x80;
 	}
     }
     return 1;

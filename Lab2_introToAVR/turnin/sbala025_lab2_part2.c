@@ -27,7 +27,7 @@ int main(void) {
     	 unsigned char cntavail = 0x00; // initialize cntavail
          input = PINA;
          if(input == 0x00) {//every thing full
-	      PORTC = cntavail;					
+	      PORTC = cntavail+4;					
         }
 	//three spots are full
 	else if(input == 0x07 || input ==0x0B || input == 0x0D || input == 0x0E){ //three spots are full
@@ -42,7 +42,7 @@ int main(void) {
 	     PORTC = cntavail+3;
 	}
 	else{
-	     PORTC = cntavail+4;
+	     PORTC = cntavail;
 	}
     }
     return 1;
