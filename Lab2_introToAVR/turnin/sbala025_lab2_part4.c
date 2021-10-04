@@ -52,7 +52,7 @@ int main(void) {
 	}
 	
 	//Convert weight to be only six bits 0x0000 --> 0x00XX
-	totalweight = totalweight & 0x00FC;
+	totalweight = (totalweight & 0x00FC)<<2;
 	
 	//Combine into one
 	PORTD = totalweight | limit | balanced;	
