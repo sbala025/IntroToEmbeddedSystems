@@ -26,7 +26,7 @@ int main(void) {
 	/* Insert your solution below */
 	while (1) {
 		tmpA = PINA;
-		tmbB = PINB;
+		tmpB = PINB;
 		tmpC = 0x00;
 		while(tmpA != 0x00){
 			if((tmpA & 0x80) == 0x80){tmpC = tmpC + 1;}
