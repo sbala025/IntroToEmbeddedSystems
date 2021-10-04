@@ -18,11 +18,13 @@ int main(void) {
     DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
     DDRC = 0xFF; PORTC = 0x00; // Configure port B's 8 pins as outputs
    
-    unsigned char input = PORTA; //initialize PORTA
-    unsigned char cntavail = 0x00; // initialize cntavail
+    //unsigned char input = PORTA; //initialize PORTA
+    //unsigned char cntavail = 0x00; // initialize cntavail
    				
     /* Insert your solution below */
     while(1){
+	 unsigned char input = PORTA; //initialize PORTA
+    	 unsigned char cntavail = 0x00; // initialize cntavail
          input = PINA;
          if(input == 0x00) {//every thing full
 	      PORTC = cntavail;					
