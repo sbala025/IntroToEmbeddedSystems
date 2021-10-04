@@ -47,10 +47,13 @@ int main(void) {
 	}
 
 	//Check if ride is balanced --> D1
-	if(abs(inputA - inputB) > 0x8C){
-		balanced = 0x02;
+	if(inputA > inputB){
+		if((inputA-inputB) > 0x8C){balanced = 0x02;}
 	}
-	
+	if(inputB > inputA){
+                if((inputB-inputA) > 0x8C){balanced = 0x02;}
+        }
+
 	//Convert weight to be only six bits 0x0000 --> 0x00XX
 	totalweight = (totalweight>>2) & 0x00FC;
 	
