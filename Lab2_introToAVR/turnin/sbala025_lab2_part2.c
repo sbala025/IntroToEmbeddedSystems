@@ -26,7 +26,7 @@ int main(void) {
 	 unsigned char input = PORTA; //initialize PORTA
     	 unsigned char cntavail = 0x00; // initialize cntavail
          input = PINA;
-	 input = input &&0x01;
+	 input = input &0x01;
          if(input == 0x00) {//every thing full
 	      PORTC = cntavail+4;					
         }
