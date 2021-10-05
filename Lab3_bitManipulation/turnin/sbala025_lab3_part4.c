@@ -21,14 +21,14 @@ int main(void) {
 	unsigned char main_input = 0x00;
 	unsigned char half1 = 0x00;
 	unsigned char half2 = 0x00;
-	unsigned char output = 0x00;
+	//unsigned char output = 0x00;
 	/* Insert your solution below */
 	while (1) {
 		main_input = PINA;
 		half1 = main_input << 4;
 		half2 = main_input >> 4;
-		output = half1 | half2;
-		PORTB = output; 
+		PORTB = half2;
+		PORTC = half1; 
 	}
 	return 1;
 }
