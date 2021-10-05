@@ -39,7 +39,7 @@ int main(void) {
 		input1 = main_input & 0x70;
 		if(input1 == 0x30){output1 = 0x80;}
 		else{output1 = 0x00;}
-		PORTC = output || output1;	
+		PORTC = output | output1;	
 	}
 	return 1;
 }
