@@ -67,7 +67,6 @@ void Tick(){
 			output = 7;
                         break;
 	}
-	}
 }
 //MAIN FUNCTION
 int main(void) {
