@@ -33,6 +33,29 @@ continue 2
 expectPORTB 0x01
 checkResult
 
+test "Button pressed once"
+setPINA 0x01
+continue 2
+expectPORTB 0x02
+checkResult
+
+test "Button released after being pressed once"
+setPINA 0x01
+continue 2
+expectPORTB 0x02
+checkResult
+
+test "Button pressed twice"
+setPINA 0x00
+continue 2
+expectPORTB 0x01
+checkResult
+
+test "Button released after being pressed twice"
+setPINA 0x00
+continue 2
+expectPORTB 0x01
+checkResult
 # Add tests below
 
 # Report on how many tests passed/tests ran
