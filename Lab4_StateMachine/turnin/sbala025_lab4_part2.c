@@ -10,7 +10,7 @@
 #include <avr/io.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
-#include "RIMS.h"
+//#include "RIMS.h"
 #endif
 //INITIALIZE ENUM
 enum States {Start, initialize, plus, minus, reset} state;
