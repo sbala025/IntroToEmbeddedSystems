@@ -13,7 +13,7 @@
 #endif
 
 //ENUM INITIALIZATION
-enum States = {Start, OFF_R, OFF_P, ON_R, ON_P} state;
+enum States {Start, OFF_R, OFF_P, ON_R, ON_P} state;
 
 //TICK FUNCTION
 void Tick(){
