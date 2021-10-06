@@ -64,7 +64,7 @@ void Tick(){
                         break;
 		default:
 			case = OFF_R;
-			break
+			break;
 	}
 }
 
