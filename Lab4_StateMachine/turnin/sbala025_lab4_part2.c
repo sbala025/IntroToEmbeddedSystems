@@ -44,7 +44,7 @@ void Tick(){
                         else if(input == 0x02){state = minus;}
                         else {state = plus;}
                         break;
-		case default:
+		default:
 			state = initialize;
                         break;
 	}
@@ -63,7 +63,7 @@ void Tick(){
 		case minus:
 			if(output > 0){output = output - 1;}
 			break;
-		case default:
+		default:
 			output = 7;
                         break;
 	}
@@ -76,7 +76,7 @@ int main(void) {
 	DDRC = 0xFF; PORTC = 0x00;
 	/* Insert your solution below */
 	while (1) {
-		Tick(1);
+		Tick();
 	}
 	return 1;
 }
