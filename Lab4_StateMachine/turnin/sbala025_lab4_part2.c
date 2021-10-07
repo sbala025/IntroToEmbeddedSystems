@@ -27,11 +27,12 @@ void Tick(){
 			if(input == 0x03){state = reset;}
 			else if(input == 0x02){state = minus;}
 			else if(input == 0x01){state = plus;}
+			else{state = initialize;}
 			break;
 		case reset:
-			if(input == 0x03){state = reset;}
-                        else if(input == 0x02){state = minus;}
-                        else {state = plus;}
+			if(input == 0x02){state = minus;}
+                        else if(input == 0x01){state = plus;}
+			else{state = reset;}
 			break;
 		case plus:
 			state = plus_down;
