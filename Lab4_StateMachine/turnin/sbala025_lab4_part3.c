@@ -78,7 +78,6 @@ void Tick(){
 		case Y_maybe:
 			break;
  		case Y_down:
- 			output = 0x00;
 			break;
 		case Y_unlocked:
 			output = 0x01;
