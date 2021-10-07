@@ -21,6 +21,8 @@ void Tick(){
 	unsigned char output = PORTC;
 	switch (state){
 		case Start:
+			state = initialize;
+			break;
 		case initialize:
 			if(input == 0x03){state = reset;}
 			else if(input == 0x02){state = minus;}
