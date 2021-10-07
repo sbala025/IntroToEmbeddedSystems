@@ -44,7 +44,7 @@ void Tick(){
 		//	break;
 		case Y_maybe:
 			if(input == 0x02 && (PORTB == 0x00)){state = Y_unlocked;}
-			if(input == 0x02 && (PORTB != 0x00)){state = Inside;}
+			else if(input == 0x02 && (PORTB != 0x00)){state = Inside;}
 			else if(input == 0x00){state = Y_maybe;}
 			else{state = Controller;}
 			break;
