@@ -11,10 +11,10 @@
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
-enum States {Start, Controller, Pound, Pound_down, Y_unlocked, Y_down, Inside, Inside_down}state;
+enum States {Start, Controller, Pound, Pound_down, Y_unlocked, Y_maybe, Y_down, Inside, Inside_down}state;
 
 void Tick(){
-	unsigned char input = PINA & 0x87
+	unsigned char input = PINA & 0x87;
 	unsigned char output = PORTB;
 	//input
 	switch(state){
