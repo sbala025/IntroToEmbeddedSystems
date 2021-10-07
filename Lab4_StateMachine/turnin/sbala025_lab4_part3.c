@@ -26,7 +26,7 @@ void Tick(){
 			else{state = Controller;} 
 			break;
 		case Inside:
-			if(input == 0x80){state = Inside_down;}
+			if(input == 0x80){state = Inside;}
 			else{state = Controller;} 
                         break;
 		//case Inside_down:
@@ -35,13 +35,11 @@ void Tick(){
                 //        break;
 		case Pound:
 			if(input == 0x04){state = Pound;}
-			else if(input == 0x00){state = Y_maybe;}
 			else {state = Y_maybe;}
 			break;
 		//case Pound_down:
 		//	if(input == 0x04){state = Pound_down;}
-		//	else if(input == 0x00){state = Y_maybe;}
-		//	else{state = Controller;}
+		//	else{state = Y_maybe;}
 		//	break;
 		case Y_maybe:
 			if(input == 0x02){state = Y_unlocked;}
