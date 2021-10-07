@@ -39,6 +39,38 @@ expectPORTC 0
 checkResult
 
 # Add tests below
+# Add tests below
+ test "Check Lock"
+ set state = Start
+ setPINA 0x00
+ continue 2
+ expectPORTC 0x00
+ expect state button_down
+ checkResult
+
+ test "Check plus state [LIMIT]"
+ setPINA 0x01
+ setPORTC 0x09
+ continue 2
+ expectPORTC 0x09
+ expect state button_down
+ checkResult
+
+ test "Check minus state"
+ set state = Start
+ setPINA 0x02
+ continue 5
+ expectPORTC 0x06
+ expect state button_down
+ checkResult
+#
+ test "Check minus state [LIMIT]"
+ set PORTC 0x00
+ setPINA 0x02
+ continue 5
+ expectPORTC 0x00
+ expect state button_down
+ checkResult
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
