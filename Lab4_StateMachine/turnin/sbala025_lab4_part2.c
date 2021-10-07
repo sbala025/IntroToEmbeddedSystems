@@ -18,7 +18,7 @@ enum States {Start, initialize, plus, plus_down, minus, minus_down, reset} state
 //TICK FUNCTION
 void Tick(){
 	unsigned char input = PINA & 0x03;
-	unsigned char output = 0x07;
+	unsigned char output = PORTC;
 	switch (state){
 		case Start:
 		case initialize:
