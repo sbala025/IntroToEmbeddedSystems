@@ -53,8 +53,9 @@ void Tick(){
 	}
 	switch (state){	
 		case Start:
-		case initialize:
 			output = 7;
+                        break;
+		case initialize:
 			break;
 		case reset:
 			output = 0;
