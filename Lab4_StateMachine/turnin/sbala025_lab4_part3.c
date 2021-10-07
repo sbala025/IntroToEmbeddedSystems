@@ -34,25 +34,25 @@ void Tick(){
 		//	else{state = Controller;}
                 //        break;
 		case Pound:
-			if(input == 0x04){state = Pound_down;}
+			if(input == 0x04){state = Pound;}
 			else if(input == 0x00){state = Y_maybe;}
 			else{state = Controller;}
 			break;
-		case Pound_down:
-			if(input == 0x04){state = Pound_down;}
-			else if(input == 0x00){state = Y_maybe;}
-			else{state = Controller;}
-			break;
+		//case Pound_down:
+		//	if(input == 0x04){state = Pound_down;}
+		//	else if(input == 0x00){state = Y_maybe;}
+		//	else{state = Controller;}
+		//	break;
 		case Y_maybe:
 			if(input == 0x02){state = Y_unlocked;}
 			else{state = Controller;}
 			break;
-		case Y_down:
-			if(input == 0x02){state = Y_down;}
-			else{state = Controller;}
-			break;
+		//case Y_down:
+		//	if(input == 0x02){state = Y_down;}
+		//	else{state = Controller;}
+		//	break;
 		case Y_unlocked:
-                        if(input == 0x02){state = Y_down;}
+                        if(input == 0x02){state = Y_unlocked;}
                         else{state = Controller;}
                         break;
 		default:
