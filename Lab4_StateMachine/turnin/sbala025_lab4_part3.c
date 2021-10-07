@@ -45,6 +45,7 @@ void Tick(){
 		//	break;
 		case Y_maybe:
 			if(input == 0x02){state = Y_unlocked;}
+			else if(input == 0x00){state = Y_maybe;}
 			else{state = Controller;}
 			break;
 		//case Y_down:
