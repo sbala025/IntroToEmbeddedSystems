@@ -13,7 +13,7 @@
 //#include "RIMS.h"
 #endif
 //INITIALIZE ENUM
-enum States {Start, Actual_start, initialize, plus, plus_down, minus, minus_down, reset} state;
+enum States {Start, Actual_start, initialize, plus, button_down, minus, reset} state;
 
 //TICK FUNCTION
 void Tick(){
@@ -38,20 +38,15 @@ void Tick(){
 			else{state = reset;}
 			break;
 		case plus:
-			state = plus_down;
+			state = button_down;
 			break;
-		case plus_down:
-			if(input == 0x01){state = plus_down;}
+		case button_down:
+			if(input == 0x01|| input == 0x02){state = button_down;}
 			else {state = initialize;}
                         break;
 		case minus:
-			state = minus_down;
+			state = button_down;
 			break;
-		case minus_down:
-			if(input == 0x03){state = reset;}
-                        else if(input == 0x02){state = minus;}
-			else {state = plus;}
-                        break;
 		default:
 			state = initialize;
                         break;
@@ -61,8 +56,8 @@ void Tick(){
 		case Actual_start:
 			output = 7;
                         break;
-		case minus_down:
-		case plus_down:
+		case button_down:
+			break;
 		case initialize:
 			break;
 		case reset:
