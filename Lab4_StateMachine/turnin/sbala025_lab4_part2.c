@@ -21,7 +21,7 @@ void Tick(){
 	unsigned char output = PORTC;
 	switch (state){
 		case Start:
-			state = initialize;
+			state = Actual_start;
 			break;
 		case Actual_start: 
 			state = initialize;
