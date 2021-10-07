@@ -42,6 +42,7 @@ void Tick(){
 			break;
 		case button_down:
 			if(input == 0x01|| input == 0x02){state = button_down;}
+			else if (input == 0x03){state = reset;}
 			else {state = initialize;}
                         break;
 		case minus:
