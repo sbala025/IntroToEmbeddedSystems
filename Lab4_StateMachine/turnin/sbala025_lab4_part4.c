@@ -80,7 +80,7 @@ void Tick(){
  		case Y_down:
 			break;
 		case Y_unlocked:
-			if(output == 0){output = 0x01;}
+			if(PORTB == 0){PORTB = 0x01;}
 			else{output = 0x00;}
 			break;
 	}
