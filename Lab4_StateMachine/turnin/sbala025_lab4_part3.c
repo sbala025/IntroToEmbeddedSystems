@@ -36,7 +36,7 @@ void Tick(){
 		case Pound:
 			if(input == 0x04){state = Pound;}
 			else if(input == 0x00){state = Y_maybe;}
-			else(state = Controller;)
+			else{state = Controller;}
 			break;
 		//case Pound_down:
 		//	if(input == 0x04){state = Pound_down;}
