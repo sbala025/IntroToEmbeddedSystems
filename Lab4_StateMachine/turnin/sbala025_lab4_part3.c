@@ -47,12 +47,12 @@ void Tick(){
 			if(input == 0x02){state = Y_unlocked;}
 			else{state = Controller;}
 			break;
-		//case Y_down:
-		//	if(input == 0x02){state = Y_down;}
-		//	else{state = Controller;}
-		//	break;
+		case Y_down:
+			if(input == 0x02){state = Y_down;}
+			else{state = Controller;}
+			break;
 		case Y_unlocked:
-                        if(input == 0x02){state = Y_maybe;}
+                        if(input == 0x02){state = Y_down;}
                         else{state = Controller;}
                         break;
 		default:
