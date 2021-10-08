@@ -96,7 +96,7 @@ void Tick(){
 			for(int i = 0; i < 4; i++){
 				if(fillIn[i] != unlock[i]){checkArr = 0;}
 			}
-			if(checkArr == true){ output = 0x01;}
+			if(checkArr == 1){ output = 0x01;}
 			else{ output = 0x00;}
 			break;
 	}
