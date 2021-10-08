@@ -21,7 +21,7 @@ void Tick(){
    		unlock[1] = 'X';
    		unlock[2] = 'Y';
 		unlock[3] = 'X';
-	bool checkArr = true;
+	char checkArr = 1;
 	char input = PINA;
 	char output = 0x00;
 	//input
@@ -94,7 +94,7 @@ void Tick(){
 		case checkCode:
 			count = 0;
 			for(int i = 0; i < 4; i++){
-				if(fillIn[i] != unlock[i]){checkArr =false;}
+				if(fillIn[i] != unlock[i]){checkArr = 0;}
 			}
 			if(checkArr == true){ output = 0x01;}
 			else{ output = 0x00;}
