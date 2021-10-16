@@ -1,4 +1,4 @@
-# Test file for "Lab5_UsingATMega1284MicroController"
+# Test file for "Lab3_bitManipulation"
 
 
 # commands.gdb provides the following functions for ease:
@@ -27,16 +27,31 @@ echo ======================================================\n
 echo Running all tests..."\n\n
 
 # Example test:
-test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
-# Set inputs
-setPINA 0x00
-setPINB 0x00
-# Continue for several ticks
+test "PINA: 0x14 => PORTC: 0x70"
+setPINA 0x14
 continue 2
-# Set expect values
-expectPORTC 0
-# Check pass/fail
+expectPORTC 0x70
 checkResult
+
+test "PINA: 0x08 => PORTC: 0x3C"
+setPINA 0x08
+continue 2
+expectPORTC 0x3C
+checkResult
+
+test "PINA: 0x1F => PORTC: 0x3F"
+setPINA 0x1F
+continue 2
+expectPORTC 0x3F
+checkResult
+
+test "PINA: 0x00 => PORTC: 0x40"
+setPINA 0x00
+continue 2
+expectPORTC 0x40
+checkResult
+
+
 
 # Add tests below
 
