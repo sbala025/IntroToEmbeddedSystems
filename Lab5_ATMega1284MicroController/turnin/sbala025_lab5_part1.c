@@ -24,6 +24,7 @@ int main(void) {
 	/* Insert your solution below */
 	while (1) {
 		input = PINA;
+		input = ~input;
 		input = input & 0x0F;
 		if(input == 0) {output = 0x40;}
 		else if(input == 1 || input == 2) {output = 0x60;}
