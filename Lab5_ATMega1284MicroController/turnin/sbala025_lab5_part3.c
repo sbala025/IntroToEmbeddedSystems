@@ -13,13 +13,13 @@
 //#include "RIMS.h"
 #endif
 //INITIALIZE ENUM
-enum States {Start, Reset, Press1, Press1D, Press2, Press2D, Press3, Press3D, Press4, Press4D} state;
+enum States {Start, Reset, Press1, Press5, Press2, Press6, Press3, Press7, Press4, Press8} state;
 
 //TICK FUNCTION
 void Tick(){
 	unsigned char input = ~PINA;
 	unsigned char output = PORTB;
-	//unsigned char count;
+	unsigned char count = 0;
 	switch(state){
 		case Start:
 			case = Reset;
