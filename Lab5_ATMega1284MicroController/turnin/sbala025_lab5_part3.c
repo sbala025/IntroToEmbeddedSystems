@@ -22,7 +22,7 @@ void Tick(){
 	unsigned char count = 0;
 	switch(state){
 		case Start:
-			case = Reset;
+			state = Reset;
 			break;
 		case Reset:
 			if(input == 0){state = Reset;}
@@ -35,38 +35,38 @@ void Tick(){
 			else if(count == 6){state = Press7;}
 			else{state = Press8;}
 		case Press1:
-			case = Down;
+			state = Down;
 			break;
 		case Down:
 			if(input != 0x00){state = Down;}
 			else{state = Reset;}
 		case Press2:
-			case = Down;
+			state = Down;
                         break;
 		case Press3:
-			case = Down;
+			state = Down;
                         break;
 		case Press4:
-			case = Down;
+			state = Down;
                         break;
 		case Press5:
-			case = Down;
+			state = Down;
                         break;
 		case Press6:
-			case = Down;
+			state = Down;
                         break;
 		case Press7:
-			case = Down;
+			state = Down;
                         break;
 		case Press8:
-			case = Down;
+			state = Down;
                         break;
 		default:
-			case = Reset;
+			state = Reset;
 			break;
 
 	}
-	switch(State){
+	switch(state){
 		case Start:
 			break;
 		case Reset:
