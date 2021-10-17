@@ -13,7 +13,7 @@
 //#include "RIMS.h"
 #endif
 //INITIALIZE ENUM
-enum States {Start, Reset, Press1, Press5, Press2, Press6, Press3, Press7, Press4, Press8} state;
+enum States {Start, Down, Reset, Press1, Press5, Press2, Press6, Press3, Press7, Press4, Press8} state;
 
 //TICK FUNCTION
 void Tick(){
