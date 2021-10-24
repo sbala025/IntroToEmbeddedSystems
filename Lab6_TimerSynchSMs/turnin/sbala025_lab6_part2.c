@@ -66,11 +66,11 @@ void Tick() {
 			}break;
 		case PAUSE:	
 			if (input == 0x01) {
-				state = Pause;
+				state = PAUSE;
 			}else {
-				state = LEFT;
+				state = LED;
 			}break;
-		case LEFT:	
+		/*case LEFT:	
 			if (input == 0x01) {
 				state = RIGHT;
 			}else {
@@ -81,7 +81,7 @@ void Tick() {
 				state = RIGHT;
 			}else {
 				state = OFF;
-			}break;
+			}break;*/
 		default:	
 			state = Start; 
 			break;
@@ -90,30 +90,31 @@ void Tick() {
 		case Start:     
 			break;
                	case OFF:      
-			PORTB = 0x01; 
+			output = 0x00; 
 			break;
 		case LED:
-			if (switchDirection == 0x00 && (output == 0x04)) {
+			if (switchDirection == 0x00 && (output == 0x02)) {
 				output = output >> 1;
 				switchDirection = 0x01;
-			}else if(switchDirection == 0x00 && (output != 0x04)) {
-				output = output << 1;
-			}else if(switchDirection == 0x01 && (output == 0x01)){
+			}else if(switchDirection == 0x00 && (output != 0x02)) {
+				output = output >> 1;
+			}else if(switchDirection == 0x01 && (output == 0x00)){
 				output = output << 1;
                                 switchDirection = 0x00;
-			}else if(switchDirection == 0x01 && (output != 0x01)){
-                        	output = output >> 1;
+			}else if(switchDirection == 0x01 && (output != 0x00)){
+                        	output = output << 1;
 			}
 			break;
 		case PAUSE: 	
 			break;
-		case LEFT:	
+		/*case LEFT:	
 			break;
 		case RIGHT: 	
-			break;
+			break;*/
                 default:        
 			break;
 	}
+	PORTB = output;
 }
 
 void main(void) {
