@@ -52,6 +52,7 @@ void TimerSet (unsigned long M) {
 
 void Tick() {
 	unsigned char input = ~PINA & 0X01;
+	unsigned char output = PORTB;
 	switch(state) {
 		case Start:	
 			state = BEGIN; 
@@ -60,7 +61,7 @@ void Tick() {
 			State = OFF;
 			break;
 		case OFF:	
-			state = NextLed; 
+			state = LED; 
 			break;
 		case LED:	
 			if (input == 0x01) {state = PAUSE;}
@@ -79,7 +80,7 @@ void Tick() {
 			count = 5;
 			break; 
                	case OFF:      
-			PORTB = 0x01; 
+			output = 0x01; 
 			break;
 		case LED:
 		if (switchDirection == 0x00 && (output == 0x02)) {
@@ -95,7 +96,7 @@ void Tick() {
 		}
 			break;
 		case PAUSE: 	
-			if(PORTB == 0x01){ count++;}
+			if(output == 0x01){ count++;}
 			else {count--;}
 			break;
                 default:        
