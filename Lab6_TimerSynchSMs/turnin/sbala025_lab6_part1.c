@@ -69,11 +69,11 @@ void Tick() {
 			break;
                	case OFF:  
 			/* initialize */    
-			PORTB = 0x01; 
+			PORTB = 0x00; 
 			break;
 		case LED:   
-			if(PORTB == 0x04){
-				PORTB = 0x01;
+			if(PORTB == 0x02){
+				PORTB = 0x00;
 			} else {
 				PORTB << 1;
 			}
