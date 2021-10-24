@@ -61,6 +61,7 @@ void Tick(){
 			state = initialize;
                         		break;
 		case initialize:
+			LCD_Cursor(1);
 			LCD_WriteData(output + '0');
 			if(input == 0x03){state = reset;}
 			else if(input == 0x02){state = minus;}
@@ -77,6 +78,7 @@ void Tick(){
 			count = 0;
 			break;
 		case plus_down:
+			LCD_Cursor(1);
 			LCD_WriteData(output + '0');
 			count++;
 			if(count == 9){state = plus; count = 0;}
@@ -86,6 +88,7 @@ void Tick(){
 			else {state = initialize;}
                         		break;
 		case minus_down:
+			LCD_Cursor(1);
 			LCD_WriteData(output + '0');
 			count++;
 			if(count == 9){state = minus; count = 0;}
