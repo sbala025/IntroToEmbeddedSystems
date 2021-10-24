@@ -53,7 +53,7 @@ void Tick() {
 	unsigned char input = ~PINA & 0X01;
 	switch(state) {
 		case Start:	
-			state = Init; 
+			state = OFF; 
 			break;
 		case OFF:	
 			state = LED; 
@@ -80,7 +80,7 @@ void Tick() {
 			if (input == 0x01) {
 				state = RIGHT;
 			}else {
-				state = Init;
+				state = OFF;
 			}break;
 		default:	
 			state = Start; 
@@ -92,23 +92,19 @@ void Tick() {
                	case OFF:      
 			PORTB = 0x01; 
 			break;
-		case NextLed:
-			if (switchDirection == 0x00) {
-				if (PORTB == 0x04) {
-					PORTB = PORTB >> 1;
-					switchDirection = 0x01;
-				}else {
-					PORTB = PORTB << 1;
-				}
+		case LED:
+			if (switchDirection == 0x00 && (output == 0x04)) {
+				output = output >> 1;
+				switchDirection = 0x01;
+			}else if(switchDirection == 0x00 && (output != 0x04)) {
+				output = output << 1;
+			}else if(switchDirection == 0x01 && (output == 0x01)){
+				output = output << 1;
+                                switchDirection = 0x00;
+			}else if(switchDirection == 0x01 && (output != 0x01)){
+                        	output = output >> 1;
 			}
-			else {
-				if (PORTB == 0x01) {
-                                        PORTB = PORTB << 1;
-                                       	switchDirection = 0x00;
-                               	} else {
-                                        PORTB = PORTB >> 1;
-                              	}
-			} break;
+			break;
 		case PAUSE: 	
 			break;
 		case LEFT:	
