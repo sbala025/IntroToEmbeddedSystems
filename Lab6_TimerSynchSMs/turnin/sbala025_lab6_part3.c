@@ -50,8 +50,8 @@ _avr_timer_cntcurr = _avr_timer_M;
 }
 
 void Tick(){
-	unsigned char input = PINA & 0x03;
-	unsigned char output = PORTC;
+	unsigned char input = ~PINA & 0x03;
+	unsigned char output = PORTB;
 	switch (state){
 		case Start:
 			state = Actual_start;
@@ -122,12 +122,12 @@ void Tick(){
                         break;
 	}
 	//count++;
-	PORTC = output;
+	PORTB = output;
 }
 /*MAIN FUNCTION*/
 int main(void) {
 	DDRA = 0x00; PORTA = 0xFF;
-	DDRC = 0xFF; PORTC = 0x00;
+	DDRB = 0xFF; PORTB = 0x00;
 	TimerSet(100);
     	TimerOn();
     	while (1) {
