@@ -73,7 +73,7 @@ void Tick() {
 			output = 0x01; 
 			break;
 		case LED:   
-			if(output == 0x03){
+			if(output == 0x04){
 				output = 0x01;
 			} else {
 				output++;
