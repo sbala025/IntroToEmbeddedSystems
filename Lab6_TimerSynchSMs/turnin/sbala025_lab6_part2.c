@@ -14,7 +14,7 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {Start, OFF, LED, PAUSE, UNPAUSE, LEFT} state;
+enum States {Start, OFF, LED, PAUSE, UNPAUSE, PLAY} state;
 volatile unsigned char TimerFlag = 0;
 /* Internal variables for mapping AVR’s ISR to our cleaner Timer ISR model */
 unsigned long _avr_timer_M = 1;
@@ -75,9 +75,15 @@ void Tick() {
 			}break;
 		case UNPAUSE:
 			if (input == 0X01) {
-				state = UNPAUSE;
+				state = PLAY;
 			}else{
-				state = LED;
+				state = UNPAUSE;
+			}break;
+		case PLAY:
+			if(input == 0X01) {
+                                state = PLAY;
+                        }else{
+                                state = LED;
 			}break;
 		/*case LEFT:	
 			if (input == 0x01) {
@@ -120,6 +126,10 @@ void Tick() {
 		case PAUSE: 	
 			break;
 		case UNPAUSE:
+			break;
+		case PLAY:
+			output = 0;
+			switchDirection = 0x00;
 			break;
 		/*case LEFT:	
 			break;
