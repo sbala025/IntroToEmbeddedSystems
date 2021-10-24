@@ -72,23 +72,25 @@ void Tick(){
 			break;
 		case plus:
 			state = plus_down;
+			count++;
 			break;
 		case plus_down:
-			if(count == 10){state = plus;}
+			if(count == 9){state = plus; count = 0;}
 			else if(input == 0x01){state = plus_down;}
 			else if(input == 0x02){state = minus;}
 			else if (input == 0x03){state = reset;}
 			else {state = initialize;}
                         		break;
 		case minus_down:
-				if(count == 10){state = minus;}
-                        	else if(input == 0x02){state = minus_down;}
-                        	else if(input == 0x01){state = plus;}
-                        	else if (input == 0x03){state = reset;}
-                        	else {state = initialize;}
-                        	break;
+			if(count == 9){state = minus; count = 0;}
+                        else if(input == 0x02){state = minus_down;}
+                        else if(input == 0x01){state = plus;}
+                        else if (input == 0x03){state = reset;}
+                        else {state = initialize;}
+                        break;
 		case minus:
 			state = minus_down;
+			count++;
 			break;
 		default:
 			state = initialize;
@@ -109,17 +111,17 @@ void Tick(){
                         break;
 		case plus:
 			if(output < 9){output = output + 1;}
-			count = 0;
+			//count = 0;
 			break;
 		case minus:
 			if(output > 0){output = output - 1;}
-			count = 0;
+			//count = 0;
 			break;
 		default:
 			output = 7;
                         break;
 	}
-	count++;
+	//count++;
 	PORTC = output;
 }
 /*MAIN FUNCTION*/
