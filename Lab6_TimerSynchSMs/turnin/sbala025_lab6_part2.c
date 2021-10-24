@@ -19,7 +19,6 @@ volatile unsigned char TimerFlag = 0;
 /* Internal variables for mapping AVR’s ISR to our cleaner Timer ISR model */
 unsigned long _avr_timer_M = 1;
 unsigned long _avr_timer_cntcurr = 0;
-unsigned char switchDirection = 0x00;
 
 void TimerOn() {
 	TCCR1B = 0x0B;
@@ -54,6 +53,7 @@ void TimerSet (unsigned long M) {
 void Tick() {
 	unsigned char input = ~PINA & 0X01;
 	unsigned char output = PORTB;
+	unsigned char switchDirection;
 	switch(state) {
 		case Start:	
 			state = OFF; 
@@ -92,6 +92,7 @@ void Tick() {
 	switch (state) {
 		case Start:     
 			break;
+			switchDirection = 0x00;
                	case OFF:      
 			output = 0x00; 
 			break;
