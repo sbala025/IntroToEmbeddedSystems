@@ -91,8 +91,9 @@ void Tick() {
 	}
 	switch (state) {
 		case Start:     
-			break;
+			
 			switchDirection = 0x00;
+			break;
                	case OFF:      
 			output = 0x00; 
 			break;
