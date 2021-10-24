@@ -8,6 +8,8 @@
  *	code, is my own original work.
  */
 #include <avr/io.h>
+
+#include <avr/interrupt.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
@@ -51,6 +53,7 @@ void TimerSet (unsigned long M) {
 
 void Tick() {
 	unsigned char input = ~PINA & 0X01;
+	unsigned char output = PORTB;
 	switch(state) {
 		case Start:	
 			state = OFF; 
@@ -93,16 +96,16 @@ void Tick() {
 			output = 0x00; 
 			break;
 		case LED:
-			if (switchDirection == 0x00 && (output == 0x02)) {
-				output = output >> 1;
+			if (switchDirection == 0x00 && (output == 0x04)) {
+				output = output >> 1
 				switchDirection = 0x01;
-			}else if(switchDirection == 0x00 && (output != 0x02)) {
-				output = output >> 1;
-			}else if(switchDirection == 0x01 && (output == 0x00)){
+			}else if(switchDirection == 0x00 && (output != 0x04)) {
+				output = output << 1;
+			}else if(switchDirection == 0x01 && (output == 0x01)){
 				output = output << 1;
                                 switchDirection = 0x00;
-			}else if(switchDirection == 0x01 && (output != 0x00)){
-                        	output = output << 1;
+			}else if(switchDirection == 0x01 && (output != 0x01)){
+                        	output = output >> 1;
 			}
 			break;
 		case PAUSE: 	
