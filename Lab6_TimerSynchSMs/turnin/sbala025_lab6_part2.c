@@ -101,12 +101,13 @@ void Tick() {
 			switchDirection = 0x00;
 			break;
                	case OFF:      
-			output = 0x00; 
+			output = 0x01; 
 			break;
 		case LED:
 			if (switchDirection == 0x00 && (output == 0x04)) {
 				output = output >> 1;
 				switchDirection = 0x01;
+				// off off on
 			}else if(switchDirection == 0x00 && (output != 0x04)) {
 				output = output << 1;
 			}else if(switchDirection == 0x01 && (output == 0x01)){
