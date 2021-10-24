@@ -9,6 +9,7 @@
  */
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "io.h"
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
@@ -135,6 +136,7 @@ int main(void) {
 	DDRD = 0xFF; PORTD = 0x00;
 	TimerSet(100);
     	TimerOn();
+	LCD_init();
     	while (1) {
 		Tick();
 		while(!TimerFlag) {};
