@@ -76,7 +76,7 @@ void Tick() {
 			if(output == 0x04){
 				output = 0x01;
 			} else {
-				output<<1;
+				output = output<<1;
 			}
 			break;
                 default:        
