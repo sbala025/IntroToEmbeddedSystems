@@ -136,6 +136,7 @@ int main(void) {
 	DDRD = 0xFF; PORTD = 0x00;
 	TimerSet(100);
     	TimerOn();
+	LCD_init();
     	while (1) {
 		Tick();
 		while(!TimerFlag) {};
