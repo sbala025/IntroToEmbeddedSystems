@@ -75,6 +75,7 @@ void Tick(){
 			count = 0;
 			break;
 		case plus_down:
+			LCD_DisplayString(1, output + ‘0’);
 			count++;
 			if(count == 9){state = plus; count = 0;}
 			else if(input == 0x01){state = plus_down;}
@@ -83,6 +84,7 @@ void Tick(){
 			else {state = initialize;}
                         		break;
 		case minus_down:
+			LCD_DisplayString(1, output + ‘0’);
 			count++;
 			if(count == 9){state = minus; count = 0;}
                         else if(input == 0x02){state = minus_down;}
@@ -101,7 +103,7 @@ void Tick(){
 	switch (state){	
 		case Start:
 		case Actual_start:
-			output = 7;
+			output = 0;
                         break;
 		case minus_down:
 		case plus_down:
@@ -124,7 +126,7 @@ void Tick(){
                         break;
 	}
 //	count++;
-	LCD_DisplayString(1, output + ‘0’);
+	//LCD_DisplayString(1, output + ‘0’);
 }
 /*MAIN FUNCTION*/
 int main(void) {
