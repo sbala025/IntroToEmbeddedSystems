@@ -8,18 +8,19 @@
  *	code, is my own original work.
  */
 #include <avr/io.h>
+#include "io.h"
+#include <avr/interrupt.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
 
-enum States {Start, BEGIN, OFF, LED, PAUSE, RIGHT, LEFT} state;
+enum States {Start, OFF, LED, PAUSE, UNPAUSE, PLAY} state;
 volatile unsigned char TimerFlag = 0;
 /* Internal variables for mapping AVR’s ISR to our cleaner Timer ISR model */
 unsigned long _avr_timer_M = 1;
 unsigned long _avr_timer_cntcurr = 0;
-unsigned char switchDirection = 0x00;
-unsigned char count = 0;
-
+unsigned char switchDirection;
+unsigned char score = 5;
 void TimerOn() {
 	TCCR1B = 0x0B;
 	OCR1A = 125;
@@ -34,7 +35,7 @@ void TimerOff() {
 }
 
 void TimerISR() { 
-TimerFlag = 1;
+	TimerFlag = 1;
 }
 
 ISR(TIMER1_COMPA_vect) {
@@ -53,79 +54,113 @@ void TimerSet (unsigned long M) {
 void Tick() {
 	unsigned char input = ~PINA & 0X01;
 	unsigned char output = PORTB;
+//	unsigned char switchDirection;
 	switch(state) {
 		case Start:	
-			state = BEGIN; 
-			break;
-		case BEGIN:
-			State = OFF;
+			state = OFF; 
 			break;
 		case OFF:	
 			state = LED; 
 			break;
 		case LED:	
-			if (input == 0x01) {state = PAUSE;}
-			else {state = LED;}break;
+			if (input == 0x01) {
+				state = PAUSE;
+			}else {
+				state = LED;
+			}break;
 		case PAUSE:	
-			if (input == 0x01) {state = PAUSE;}
-			else {state = LED;}break;
+			if (input == 0x01) {
+				state = PAUSE;
+			}else {
+				state = UNPAUSE;
+			}break;
+		case UNPAUSE:
+			if (input == 0X01) {
+				state = PLAY;
+			}else{
+				state = UNPAUSE;
+			}break;
+		case PLAY:
+			if(input == 0X01) {
+                                state = PLAY;
+                        }else{
+                                state = LED;
+			}break;
+		/*case LEFT:	
+			if (input == 0x01) {
+				state = RIGHT;
+			}else {
+				state = LEFT;
+			}break;
+		case RIGHT:	
+			if (input == 0x01) {
+				state = RIGHT;
+			}else {
+				state = OFF;
+			}break;*/
 		default:	
 			state = Start; 
 			break;
 	}
 	switch (state) {
 		case Start:     
+			
+			switchDirection = 0x00;
 			break;
-		case BEGIN:
-			count = 5;
-			break; 
                	case OFF:      
-			output = 0x01; 
+			output = 0x01;
+			score = 5; 
 			break;
 		case LED:
-		if (switchDirection == 0x00 && (output == 0x02)) {
-			output = output >> 1;
-			switchDirection = 0x01;
-		}else if(switchDirection == 0x00 && (output != 0x02)) {
-			output = output << 1;
-		}else if(switchDirection == 0x01 && (output == 0x00)){
-			output = output << 1;
-                        switchDirection = 0x00;
-		}else if(switchDirection == 0x01 && (output != 0x00)){
-                        output = output >> 1;
-		}
+			if (switchDirection == 0x00 && (output == 0x04)) {
+				output = output >> 1;
+				switchDirection = 0x01;
+				// off off on
+			}else if(switchDirection == 0x00 && (output != 0x04)) {
+				output = output << 1;
+			}else if(switchDirection == 0x01 && (output == 0x01)){
+				output = output << 1;
+                                switchDirection = 0x00;
+			}else if(switchDirection == 0x01 && (output != 0x01)){
+                        	output = output >> 1;
+			}
 			break;
 		case PAUSE: 	
-			if(output == 0x01){ count++;}
-			else {count--;}
+			if(output == 0x02){
+				score++;
+			else{
+				if(score != 0){score--;}
+			if(score == 9){
+				LCD_DisplayString(1, "WINNER!");
+				score = 5;
+			}
 			break;
+		case UNPAUSE:
+			break;
+		case PLAY:
+			LCD_ClearScreen();
+			output = 1;
+			switchDirection = 0x00;
+			break;
+		/*case LEFT:	
+			break;
+		case RIGHT: 	
+			break;*/
                 default:        
 			break;
 	}
 	PORTB = output;
-	if (count == 0x00) {LCD_DisplayString(1, 0 + ‘0’);}
-	else if (count == 0x01) {LCD_DisplayString(1, 1 + ‘0’);}
-	else if (count == 0x02) {LCD_DisplayString(1, 2 + ‘0’); }
-	else if (count == 0x03) {LCD_DisplayString(1, 3 + ‘0’);}
-	else if (count == 0x04) {LCD_DisplayString(1, 4 + ‘0’); }
-	else if (count == 0x05) {LCD_DisplayString(1, 5 + ‘0’);}
-	else if (count == 0x06) {LCD_DisplayString(1, 6 + ‘0’);}
-	else if (count == 0x07) {LCD_DisplayString(1, 7 + ‘0’); }
-	else if (count == 0x08) {LCD_DisplayString(1, 8 + ‘0’);}
-	else if (count == 0x09) {LCD_DisplayString(1, 9 + ‘0’);}
 }
 
 void main(void) {
-DDRB = 0xFF; PORTB = 0x00;
-DDRC = 0xFF; PORTC = 0x00;
- DDRD = 0xFF; PORTD = 0x00;
- TimerSet(300);
-  TimerOn();
-  LCD_init();
-  while (1) {
+    DDRA = 0x00; PORTA = 0xFF;
+    DDRB = 0xFF; PORTB = 0x00;
+    TimerSet(300);
+    TimerOn();
+    while (1) {
 	Tick();
 	while(!TimerFlag) {};
 	TimerFlag = 0;
-  }
+    }
 }
 
