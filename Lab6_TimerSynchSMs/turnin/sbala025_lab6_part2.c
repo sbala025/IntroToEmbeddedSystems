@@ -14,12 +14,12 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {Start, OFF, LED, PAUSE, RIGHT, LEFT} state;
+enum States {Start, OFF, LED, PAUSE, UNPAUSE, LEFT} state;
 volatile unsigned char TimerFlag = 0;
 /* Internal variables for mapping AVR’s ISR to our cleaner Timer ISR model */
 unsigned long _avr_timer_M = 1;
 unsigned long _avr_timer_cntcurr = 0;
-
+unsigned char switchDirection;
 void TimerOn() {
 	TCCR1B = 0x0B;
 	OCR1A = 125;
@@ -53,7 +53,7 @@ void TimerSet (unsigned long M) {
 void Tick() {
 	unsigned char input = ~PINA & 0X01;
 	unsigned char output = PORTB;
-	unsigned char switchDirection;
+//	unsigned char switchDirection;
 	switch(state) {
 		case Start:	
 			state = OFF; 
@@ -71,7 +71,13 @@ void Tick() {
 			if (input == 0x01) {
 				state = PAUSE;
 			}else {
+				state = UNPAUSE;
+			}break;
+		case UNPAUSE:
+			if (input == 0X01) {
 				state = LED;
+			}else{
+				state = UNPAUSE;
 			}break;
 		/*case LEFT:	
 			if (input == 0x01) {
@@ -111,6 +117,8 @@ void Tick() {
 			}
 			break;
 		case PAUSE: 	
+			break;
+		case UNPAUSE:
 			break;
 		/*case LEFT:	
 			break;
