@@ -102,6 +102,7 @@ void Tick() {
                 default:        
 			break;
 	}
+	PORTB = output;
 	if (count == 0x00) {LCD_DisplayString(1, 0 + ‘0’);}
 	else if (count == 0x01) {LCD_DisplayString(1, 1 + ‘0’);}
 	else if (count == 0x02) {LCD_DisplayString(1, 2 + ‘0’); }
