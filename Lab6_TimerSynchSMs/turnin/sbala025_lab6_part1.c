@@ -49,7 +49,7 @@ void TimerSet (unsigned long M) {
 }
 
 void Tick() {
-	
+	unsigned char output = PORTB;	
 	switch(state) {
 		case Start:	
 			state = OFF; 
@@ -69,18 +69,19 @@ void Tick() {
 			break;
                	case OFF:  
 			/* initialize */    
-			PORTB = 0x00; 
+			output = 0x00; 
 			break;
 		case LED:   
-			if(PORTB == 0x02){
-				PORTB = 0x00;
+			if(output == 0x02){
+				output = 0x00;
 			} else {
-				PORTB << 1;
+				output++;
 			}
 			break;
                 default:        
 			break;
 	}
+	PORTB = output;
 }
 
 void main(void) {
