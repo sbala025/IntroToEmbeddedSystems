@@ -17,7 +17,7 @@ volatile unsigned char TimerFlag = 0;
 /* Internal variables for mapping AVR’s ISR to our cleaner Timer ISR model */
 unsigned long _avr_timer_M = 1;
 unsigned long _avr_timer_cntcurr = 0;
-unsigned char output = 0;
+
 void TimerOn() {
 	TCCR1B = 0x0B;
 	OCR1A = 125;
