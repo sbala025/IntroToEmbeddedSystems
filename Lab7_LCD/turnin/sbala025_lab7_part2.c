@@ -128,7 +128,7 @@ void Tick() {
 		case PAUSE: 	
 			if(output == 0x02){
 				score++;
-			else{
+			}else{
 				if(score != 0){score--;}
 			}if(score == 9){
 				LCD_DisplayString(1, "WINNER!");
