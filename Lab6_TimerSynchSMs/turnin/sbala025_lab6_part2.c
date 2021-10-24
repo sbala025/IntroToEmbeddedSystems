@@ -75,9 +75,9 @@ void Tick() {
 			}break;
 		case UNPAUSE:
 			if (input == 0X01) {
-				state = LED;
-			}else{
 				state = UNPAUSE;
+			}else{
+				state = LED;
 			}break;
 		/*case LEFT:	
 			if (input == 0x01) {
@@ -132,6 +132,7 @@ void Tick() {
 }
 
 void main(void) {
+    DDRA = 0x00; PORTA = 0xFF;
     DDRB = 0xFF; PORTB = 0x00;
     TimerSet(300);
     TimerOn();
