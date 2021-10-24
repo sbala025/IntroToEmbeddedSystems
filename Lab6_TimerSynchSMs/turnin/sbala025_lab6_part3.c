@@ -72,7 +72,7 @@ void Tick(){
 			break;
 		case plus:
 			state = plus_down;
-			count++;
+	//		count++;
 			break;
 		case plus_down:
 			if(count == 9){state = plus; count = 0;}
@@ -90,7 +90,7 @@ void Tick(){
                         break;
 		case minus:
 			state = minus_down;
-			count++;
+	//		count++;
 			break;
 		default:
 			state = initialize;
@@ -121,7 +121,7 @@ void Tick(){
 			output = 7;
                         break;
 	}
-	//count++;
+	count++;
 	PORTB = output;
 }
 /*MAIN FUNCTION*/
