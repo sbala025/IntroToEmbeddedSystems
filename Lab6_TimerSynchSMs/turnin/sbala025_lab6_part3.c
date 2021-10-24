@@ -8,6 +8,7 @@
  *	code, is my own original work.
  */
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
@@ -17,7 +18,7 @@ volatile unsigned char TimerFlag = 0;
 /* Internal variables for mapping AVR’s ISR to our cleaner Timer ISR model */
 unsigned long _avr_timer_M = 1;
 unsigned long _avr_timer_cntcurr = 0;
-
+unsigned char count = 0;
 void TimerOn() {
 TCCR1B = 0x0B;
 OCR1A = 125;
@@ -73,13 +74,15 @@ void Tick(){
 			state = plus_down;
 			break;
 		case plus_down:
-			if(input == 0x01){state = plus_down;}
+			if(count == 10){state = plus;}
+			else if(input == 0x01){state = plus_down;}
 			else if(input == 0x02){state = minus;}
 			else if (input == 0x03){state = reset;}
 			else {state = initialize;}
                         		break;
 		case minus_down:
-                        	if(input == 0x02){state = minus_down;}
+				if(count == 10){state = minus;}
+                        	else if(input == 0x02){state = minus_down;}
                         	else if(input == 0x01){state = plus;}
                         	else if (input == 0x03){state = reset;}
                         	else {state = initialize;}
@@ -106,14 +109,17 @@ void Tick(){
                         break;
 		case plus:
 			if(output < 9){output = output + 1;}
+			count = 0;
 			break;
 		case minus:
 			if(output > 0){output = output - 1;}
+			count = 0;
 			break;
 		default:
 			output = 7;
                         break;
 	}
+	count++;
 	PORTC = output;
 }
 /*MAIN FUNCTION*/
