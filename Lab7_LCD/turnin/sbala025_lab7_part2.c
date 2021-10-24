@@ -130,7 +130,7 @@ void Tick() {
 				score++;
 			else{
 				if(score != 0){score--;}
-			if(score == 9){
+			}if(score == 9){
 				LCD_DisplayString(1, "WINNER!");
 				score = 5;
 			}
