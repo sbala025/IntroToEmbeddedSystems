@@ -128,7 +128,7 @@ void Tick() {
 		case UNPAUSE:
 			break;
 		case PLAY:
-			output = 0;
+			output = 1;
 			switchDirection = 0x00;
 			break;
 		/*case LEFT:	
