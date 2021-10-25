@@ -14,9 +14,37 @@
 # An example set of tests is shown below. It is important to note that these tests are not "unit tests" in 
 # that they are not ran in isolation but in the order shown and the state of the device is not reset or 
 # altered in between executions (unless preconditions are used).
-tests = [ {'description': 'This test will run first.',
-    'steps': [ {'inputs': [('PINA',<val>)], 'iterations': 1 } ],
-    'expected': [('PORT',<val>)],
+tests = [ {'description': '0 to 1',}
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTC',0x01)],
+    },
+	{'description': '1 to 2',}
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTC',0x02)],
+    },
+	{'description': '2 to 3',}
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTC',0x03)],
+    },
+	{'description': '3 to 4',}
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTC',0x04)],
+    },
+	{'description': '4 to 5',}
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTC',0x05)],
+    },
+	{'description': '5 to 6',}
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTC',0x06)],
+    },
+	{'description': '6 to 7',}
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTC',0x07)],
+    },
+	{'description': '9 to 9',}
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTC',0x09)],
     },
     {'description': 'This test will run second.',
     'steps': [ {'inputs': [('PIN', <val>)],'iterations': 1}, # Set PIN to val then run one iteration
