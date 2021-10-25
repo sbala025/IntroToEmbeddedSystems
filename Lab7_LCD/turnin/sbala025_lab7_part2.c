@@ -108,6 +108,8 @@ void Tick() {
 			switchDirection = 0x00;
 			break;
                	case OFF:      
+			LCD_Cursor(1);
+                                LCD_WriteData(score + '0');
 			output = 0x01;
 			score = 5; 
 			break;
@@ -165,6 +167,7 @@ void main(void) {
     DDRB = 0xFF; PORTB = 0x00;
     TimerSet(300);
     TimerOn();
+	LCD_init();
     while (1) {
 	Tick();
 	while(!TimerFlag) {};
