@@ -69,11 +69,16 @@ void Tick() {
 				state = LED;
 			}break;
 		case PAUSE:	
-			if (input == 0x01) {
+			/*if (input == 0x01) {
 				state = PAUSE;
 			}else {
 				state = UNPAUSE;
-			}break;
+			}*/
+			if(output == 0x02){
+                                score++;
+                        }else{
+                                if(score != 0){score--;}
+			break;
 		case UNPAUSE:
 			if(score == 9){state = VIC;}
 			else if (input == 0X01) {
@@ -132,11 +137,11 @@ void Tick() {
 			}
 			break;
 		case PAUSE: 	
-			if(output == 0x02){
+	/*		if(output == 0x02){
 				score++;
 			}else{
 				if(score != 0){score--;}
-			}if(score == 9){
+			}*/if(score == 9){
 				LCD_DisplayString(1, "WINNER!");
 				score = 5;
 			}else{
