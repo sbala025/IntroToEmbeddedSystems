@@ -73,7 +73,7 @@ void Tick() {
 				state = PAUSE;
 			}else {
 				state = UNPAUSE;
-			}*/
+			}*/state = UNPAUSE;
 			if(output == 0x02){
                                 score++;
                         }else{
