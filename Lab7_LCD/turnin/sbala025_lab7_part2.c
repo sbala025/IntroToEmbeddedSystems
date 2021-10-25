@@ -133,12 +133,20 @@ void Tick() {
 			}if(score == 9){
 				LCD_DisplayString(1, "WINNER!");
 				score = 5;
+			}else{
+				LCD_Cursor(1);
+				LCD_WriteData(score + '0');
 			}
 			break;
 		case UNPAUSE:
+			if(score == 5){
+			//	LCD_ClearScreen();
+				LCD_Cursor(1);
+                                LCD_WriteData(score + '0');
+			}
 			break;
 		case PLAY:
-			LCD_ClearScreen();
+			//LCD_ClearScreen();
 			output = 1;
 			switchDirection = 0x00;
 			break;
