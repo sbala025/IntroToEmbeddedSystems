@@ -78,7 +78,7 @@ void Tick() {
                                 score++;
                         }else{
                                 if(score != 0){score--;}
-			break;
+			}break;
 		case UNPAUSE:
 			if(score == 9){state = VIC;}
 			else if (input == 0X01) {
