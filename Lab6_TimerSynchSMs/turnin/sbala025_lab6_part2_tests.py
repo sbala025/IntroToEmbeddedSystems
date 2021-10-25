@@ -14,16 +14,31 @@
 # An example set of tests is shown below. It is important to note that these tests are not "unit tests" in 
 # that they are not ran in isolation but in the order shown and the state of the device is not reset or 
 # altered in between executions (unless preconditions are used).
-tests = [ {'description': 'This test will run first.',
-    'steps': [ {'inputs': [('PINA',<val>)], 'iterations': 1 } ],
-    'expected': [('PORT',<val>)],
+tests = [ {'description': 'Test initial state',
+    'steps': [ {'inputs': [('PINA',0x00)], 'iterations': 1 } ],
+    'expected': [('PORT',0x01)],
     },
-    {'description': 'This test will run second.',
-    'steps': [ {'inputs': [('PIN', <val>)],'iterations': 1}, # Set PIN to val then run one iteration
-        {'inputs': [('PIN',<val>)], 'time': 300 }, # Set PIN to val then run 300 ms
-        {'inputs': [('PIN',<val>)], 'iterations': 1, 'expected': [('PORT',<val>)]}, 
-        {'inputs': [('PIN',<val>)], 'time': 600}, ],
-    'expected': [('PORT',<val>)],
+    {'description': 'Test pause function',
+    'steps': [ {'inputs': [('PINA', 0x01)],'iterations': 1}, # Set PIN to val then run one iteration
+        {'inputs': [('PINA',0x01)], 'time': 300 }, # Set PIN to val then run 300 ms
+        {'inputs': [('PINA',0x01)], 'iterations': 1, 'expected': [('PORTB',0x02)]}, 
+        {'inputs': [('PINA',0x01)], 'time': 600}, ],
+    'expected': [('PORT',0x02)],
+    },
+    {'description': 'Test unpause function',
+    'steps': [ {'inputs': [('PINA',0x00)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x02)],
+    },
+    {'description': 'Test pause function again',
+    'steps': [ {'inputs': [('PINA', 0x01)],'iterations': 1}, # Set PIN to val then run one iteration
+        {'inputs': [('PINA',0x01)], 'time': 300 }, # Set PIN to val then run 300 ms
+        {'inputs': [('PINA',0x01)], 'iterations': 1, 'expected': [('PORTB',0x04)]}, 
+        {'inputs': [('PINA',0x00)], 'time': 600}, ],
+    'expected': [('PORT',0x04)],
+    },
+    {'description': 'Test unpause function again',
+    'steps': [ {'inputs': [('PINA',0x00)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x01)],
     },
     ]
 

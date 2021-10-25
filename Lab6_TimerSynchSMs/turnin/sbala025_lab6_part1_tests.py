@@ -15,17 +15,19 @@
 # that they are not ran in isolation but in the order shown and the state of the device is not reset or 
 # altered in between executions (unless preconditions are used).
 tests = [ {'Test at 1 second': 'This test will run first.',
-    'steps': [ {'inputs': [('PINA',<val>)], 'iterations': 1 } ],
-    'expected': [('PORT',<val>)],
+    'expected': [('PORTB',0x01)],
     },
     {'description': 'This test will run second.',
-    'steps': [ {'inputs': [('PIN', <val>)],'iterations': 1}, # Set PIN to val then run one iteration
-        {'inputs': [('PIN',<val>)], 'time': 300 }, # Set PIN to val then run 300 ms
-        {'inputs': [('PIN',<val>)], 'iterations': 1, 'expected': [('PORT',<val>)]}, 
-        {'inputs': [('PIN',<val>)], 'time': 600}, ],
-    'expected': [('PORT',<val>)],
+       # {'inputs': [('PIN',<val>)], 'time': 1000 }, # Set PIN to val then run 300 ms
+        #{'inputs': [('PIN',<val>)], 'iterations': 1, 'expected': [('PORT',<val>)]}, 
+       
+    'expected': [('PORTB',0x02)],
+    },
+	 {'description': 'This test will run third.',
+    'expected': [('PORTB',0x04)],
     },
     ]
+
 
 # Optionally you can add a set of "watch" variables these need to be global or static and may need
 # to be scoped at the function level (for static variables) if there are naming conflicts. The 

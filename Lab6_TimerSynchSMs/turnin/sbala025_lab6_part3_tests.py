@@ -14,17 +14,49 @@
 # An example set of tests is shown below. It is important to note that these tests are not "unit tests" in 
 # that they are not ran in isolation but in the order shown and the state of the device is not reset or 
 # altered in between executions (unless preconditions are used).
-tests = [ {'description': 'This test will run first.',
-    'steps': [ {'inputs': [('PINA',<val>)], 'iterations': 1 } ],
-    'expected': [('PORT',<val>)],
+tests = [ {'description': 'Init',
+    'steps': [ {'inputs': [('PINA',0x00)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x07)],
     },
-    {'description': 'This test will run second.',
-    'steps': [ {'inputs': [('PIN', <val>)],'iterations': 1}, # Set PIN to val then run one iteration
-        {'inputs': [('PIN',<val>)], 'time': 300 }, # Set PIN to val then run 300 ms
-        {'inputs': [('PIN',<val>)], 'iterations': 1, 'expected': [('PORT',<val>)]}, 
-        {'inputs': [('PIN',<val>)], 'time': 600}, ],
-    'expected': [('PORT',<val>)],
+    {'description': 'Plus',
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x08)],
     },
+    {'description': 'Plus down',
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x08)],
+    },
+    {'description': 'Reset',
+    'steps': [ {'inputs': [('PINA',0x03)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x07)],
+    },
+    {'description': 'Plus',
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x09)],
+    },
+    {'description': 'Minus',
+    'steps': [ {'inputs': [('PINA',0x02)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x08)],
+    },
+    {'description': 'Minus down',
+    'steps': [ {'inputs': [('PINA',0x02)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x08)],
+    },
+    {'description': 'Plus',
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x09)],
+    },
+    {'description': 'Plus',
+    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 1 } ],
+    'expected': [('PORTB',0x09)],
+    },
+    #{'description': 'This test will run second.',
+    #'steps': [ {'inputs': [('PIN', <val>)],'iterations': 1}, # Set PIN to val then run one iteration
+      #  {'inputs': [('PIN',<val>)], 'time': 300 }, # Set PIN to val then run 300 ms
+      #  {'inputs': [('PIN',<val>)], 'iterations': 1, 'expected': [('PORT',<val>)]}, 
+     #   {'inputs': [('PIN',<val>)], 'time': 600}, ],
+    #'expected': [('PORT',<val>)],
+    #},
     ]
 
 # Optionally you can add a set of "watch" variables these need to be global or static and may need
