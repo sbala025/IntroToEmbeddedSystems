@@ -1,7 +1,8 @@
 /*	Author: sbala025
  *  Partner(s) Name: 
  *	Lab Section:
- *	Assignment: Lab #  Exercise #
+ *	Assignment: Lab #8  Exercise #3
+ *	Video: https://drive.google.com/drive/folders/1TFTQVNYBFSkwfeAfD7Xym1YvXfrMgYn8?usp=sharing
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
