@@ -113,15 +113,15 @@ void Tick_Blink(){
 }
 
 void Tick_Speaker(){
-	input = ~PINA & 0x01;
+	input = ~PINA & 0x04;
 	switch(Speaker_State){
 		case Speaker_SMStart:
 			Speaker_State = S_Off; break;
 		case S_Off:
-			if(input == 0x01){Speaker_State = S_On;}
+			if(input == 0x04){Speaker_State = S_On;}
 			else{Speaker_State = S_Off;} break;
 		case S_On:
-			if(input == 0x01){Speaker_State = S_On;}
+			if(input == 0x04){Speaker_State = S_On;}
                         else{Speaker_State = S_Off;} break;
 		default:
 			Speaker_State = S_Off; break;
@@ -163,6 +163,7 @@ void Tick_Combine(){
 }
 int main(void) {
 	/* Insert DDR and PORT initializations */
+	DDRB = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x00;
     	/* Insert your solution below */
     	unsigned long Blink_Time = 0;
