@@ -79,7 +79,7 @@ void Tick_Three(){
 		case T1:
 			three_output = 0x02; break;
 		case T2:
-			three_output = 0x03; break;
+			three_output = 0x04; break;
 		default:
 			break;
 	}
@@ -102,7 +102,7 @@ void Tick_Blink(){
 		case Off:
 			blink_output = 0x00; break;
 		case On: 
-			blink_output = 0x01; break;
+			blink_output = 0x08; break;
 		default:
 			break;
 	}
