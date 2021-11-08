@@ -120,10 +120,12 @@ void Tick_Speaker(){
 		case S_Off:
 			/*if(input == 0x04)*/Speaker_State = S_On;
 			//else{Speaker_State = S_Off;} break;
+			break;
 		case S_On:
 			//if(input == 0x04){Speaker_State = S_On;}
                         //else{Speaker_State = S_Off;} break;
                         Speaker_State = S_On;
+			break;
 		default:
 			Speaker_State = S_Off; break;
 	}
@@ -133,6 +135,7 @@ void Tick_Speaker(){
 		case S_Off:
 			speaker_output = 0x00;
 			speaker_counter = 0x00;
+			break;
 		case S_On:
 			if(speaker_counter < 2){speaker_output == 0x10;}
 			else if(speaker_counter < 4){speaker_output == 0x00;}
