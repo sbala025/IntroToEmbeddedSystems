@@ -16,10 +16,14 @@
 enum Three{Three_SMStart, T0, T1, T2}Three_State;
 enum Blink{Blink_SMStart, Off, On}Blink_State;
 enum Combine{Combine_SMStart, comb}Combine_State;
+enum Speaker{Speaker_SMStart, S_Off, S_On}Speaker_State;
 
 unsigned char three_output = 0x00;
 unsigned char blink_output = 0x00;
+unsigned char speaker_output = 0x00;
+unsigned char speaker_counter = 0x00;
 unsigned char output = 0x00;
+unsigned char input = 0x00;
 
 volatile unsigned char TimerFlag = 0;
 /* Internal variables for mapping AVR’s ISR to our cleaner Timer ISR model */
@@ -108,6 +112,36 @@ void Tick_Blink(){
 	}
 }
 
+void Tick_Speaker(){
+	input = ~PINA & 0x04;
+	switch(Speaker_State){
+		case Speaker_SMStart:
+			Speaker_State = S_Off; break;
+		case S_Off:
+			if(input == 0x04){Speaker_State = S_On;}
+			else{Speaker_State = S_Off;} break;
+		case S_On:
+			if(input == 0x04){Speaker_State = S_On;}
+                        else{Speaker_State = S_Off;} break;
+		default:
+			Speaker_State = S_Off; break;
+	}
+	switch(Speaker_State){
+                case Speaker_SMStart:
+			break;
+		case S_Off:
+			speaker_output = 0x00;
+			speaker_counter = 0x00;
+		case S_On:
+			if(speaker_counter < 2){speaker_output == 0x10;}
+			else if(speaker_counter < 4){speaker_output == 0x00;}
+			else{speaker_counter = 0x00;}
+			speaker_counter++;
+		default:
+			break;
+	}			
+}
+
 void Tick_Combine(){
 	switch(Combine_State){
 		case Combine_SMStart:
@@ -121,7 +155,7 @@ void Tick_Combine(){
 		case Combine_SMStart:
 			break;
 		case comb:
-			output = blink_output | three_output; break;
+			output = blink_output | three_output | speaker_output; break;
 		default:
 			break;
 	}
@@ -129,6 +163,7 @@ void Tick_Combine(){
 }
 int main(void) {
 	/* Insert DDR and PORT initializations */
+	DDRB = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x00;
     	/* Insert your solution below */
     	unsigned long Blink_Time = 0;
@@ -146,7 +181,9 @@ int main(void) {
 		}if(Blink_Time >= 1000){
 			Tick_Blink();
 			Blink_Time = 0;
-		}Tick_Combine();
+		}
+		Tick_Speaker();
+		Tick_Combine();
 		while(!TimerFlag){}
 		TimerFlag = 0;
 		Blink_Time += TimerPeriod;

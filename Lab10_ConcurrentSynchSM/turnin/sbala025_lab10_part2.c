@@ -79,7 +79,7 @@ void Tick_Three(){
 		case T1:
 			three_output = 0x02; break;
 		case T2:
-			three_output = 0x03; break;
+			three_output = 0x04; break;
 		default:
 			break;
 	}
@@ -92,7 +92,7 @@ void Tick_Blink(){
 		case Off:
 			Blink_State = On; break;
 		case On:
-			Blink_State = Off;
+			Blink_State = Off; break;
 		default:
 			Blink_State = Off; break;
 	}
@@ -102,7 +102,7 @@ void Tick_Blink(){
 		case Off:
 			blink_output = 0x00; break;
 		case On: 
-			blink_output = 0x01; break;
+			blink_output = 0x08; break;
 		default:
 			break;
 	}
@@ -143,7 +143,7 @@ int main(void) {
 		if(Three_Time >= 300){
 			Tick_Three();
 			Three_Time = 0;
-		}if(Blink_Time >= 100){
+		}if(Blink_Time >= 1000){
 			Tick_Blink();
 			Blink_Time = 0;
 		}Tick_Combine();
