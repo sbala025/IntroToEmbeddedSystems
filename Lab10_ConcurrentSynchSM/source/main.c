@@ -118,11 +118,12 @@ void Tick_Speaker(){
 		case Speaker_SMStart:
 			Speaker_State = S_Off; break;
 		case S_Off:
-			if(input == 0x04){Speaker_State = S_On;}
-			else{Speaker_State = S_Off;} break;
+			/*if(input == 0x04)*/Speaker_State = S_On;
+			//else{Speaker_State = S_Off;} break;
 		case S_On:
-			if(input == 0x04){Speaker_State = S_On;}
-                        else{Speaker_State = S_Off;} break;
+			//if(input == 0x04){Speaker_State = S_On;}
+                        //else{Speaker_State = S_Off;} break;
+                        Speaker_State = S_On;
 		default:
 			Speaker_State = S_Off; break;
 	}
@@ -133,11 +134,11 @@ void Tick_Speaker(){
 			speaker_output = 0x00;
 			speaker_counter = 0x00;
 		case S_On:
-//			if(speaker_counter < 2){speaker_output == 0x10;}
-//			else if(speaker_counter < 4){speaker_output == 0x00;}
-//			else{speaker_counter = 0x00;}
-//
-//			speaker_counter++; break;
+			if(speaker_counter < 2){speaker_output == 0x10;}
+			else if(speaker_counter < 4){speaker_output == 0x00;}
+			else{speaker_counter = 0x00;}
+
+			speaker_counter++; break;
 			break;
 		default:
 			break;
@@ -157,7 +158,7 @@ void Tick_Combine(){
 		case Combine_SMStart:
 			break;
 		case comb:
-			output = blink_output | three_output | 0x10; break;
+			output = blink_output | three_output | speaker_output; break;
 		default:
 			break;
 	}
