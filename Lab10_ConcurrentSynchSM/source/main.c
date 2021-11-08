@@ -79,7 +79,7 @@ void Tick_Three(){
 		case T1:
 			three_output = 0x02; break;
 		case T2:
-			three_output = 0x04; break;
+			three_output = 0x03; break;
 		default:
 			break;
 	}
@@ -92,7 +92,7 @@ void Tick_Blink(){
 		case Off:
 			Blink_State = On; break;
 		case On:
-			Blink_State = Off; break;
+			Blink_State = Off break;;
 		default:
 			Blink_State = Off; break;
 	}
@@ -102,7 +102,7 @@ void Tick_Blink(){
 		case Off:
 			blink_output = 0x00; break;
 		case On: 
-			blink_output = 0x08; break;
+			blink_output = 0x01; break;
 		default:
 			break;
 	}
@@ -131,17 +131,26 @@ int main(void) {
 	/* Insert DDR and PORT initializations */
 	DDRB = 0xFF; PORTB = 0x00;
     	/* Insert your solution below */
-    	TimerSet(1000);
+    	unsigned long Blink_Time = 0;
+	unsigned long Three_Time = 0;
+	const unsigned long TimerPeriod = 100;
+	TimerSet(100);
 	TimerOn();
 	Three_State = Three_SMStart;
 	Blink_State = Blink_SMStart;
 	Combine_State = Combine_SMStart;
 	while (1) {
-		Tick_Three();
-		Tick_Blink();
-		Tick_Combine();
+		if(Three_Time >= 300){
+			Tick_Three();
+			Three_Time = 0;
+		}if(Blink_Time >= 100){
+			Tick_Blink();
+			Blink_Time = 0;
+		}Tick_Combine();
 		while(!TimerFlag){}
 		TimerFlag = 0;
+		Blink_Time += TimerPeriod;
+		Three_Time += TimerPeriod;
     	}
  //   	return 1;
 }
