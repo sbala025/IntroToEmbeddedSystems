@@ -3,7 +3,7 @@
  *	Lab Section: 021
  *	Assignment: Lab #10  Exercise #1
  *	Exercise Description: [optional - include for your own benefit]
- *
+ *	Demo: https://drive.google.com/drive/folders/1zc4HVasMswXAK-eIxXc2piIIwF1u_YW8?usp=sharing
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
  */
@@ -83,7 +83,7 @@ void Tick_Three(){
 		case T1:
 			three_output = 0x02; break;
 		case T2:
-			three_output = 0x03; break;
+			three_output = 0x04; break;
 		default:
 			break;
 	}
@@ -96,7 +96,7 @@ void Tick_Blink(){
 		case Off:
 			Blink_State = On; break;
 		case On:
-			Blink_State = Off;
+			Blink_State = Off; break;
 		default:
 			Blink_State = Off; break;
 	}
@@ -106,7 +106,7 @@ void Tick_Blink(){
 		case Off:
 			blink_output = 0x00; break;
 		case On: 
-			blink_output = 0x01; break;
+			blink_output = 0x08; break;
 		default:
 			break;
 	}
@@ -120,9 +120,12 @@ void Tick_Speaker(){
 		case S_Off:
 			if(input == 0x04){Speaker_State = S_On;}
 			else{Speaker_State = S_Off;} break;
+			break;
 		case S_On:
 			if(input == 0x04){Speaker_State = S_On;}
                         else{Speaker_State = S_Off;} break;
+                        //Speaker_State = S_On;
+			//break;
 		default:
 			Speaker_State = S_Off; break;
 	}
@@ -132,11 +135,15 @@ void Tick_Speaker(){
 		case S_Off:
 			speaker_output = 0x00;
 			speaker_counter = 0x00;
+			break;
 		case S_On:
-			if(speaker_counter < 2){speaker_output == 0x10;}
-			else if(speaker_counter < 4){speaker_output == 0x00;}
+			speaker_counter++; 
+			if(speaker_counter <= 2){speaker_output == 0x10;}
+			else if(speaker_counter <= 4){speaker_output == 0x00;}
 			else{speaker_counter = 0x00;}
-			speaker_counter++;
+
+			//speaker_counter++; break;
+			break;
 		default:
 			break;
 	}			
@@ -168,8 +175,8 @@ int main(void) {
     	/* Insert your solution below */
     	unsigned long Blink_Time = 0;
 	unsigned long Three_Time = 0;
-	const unsigned long TimerPeriod = 100;
-	TimerSet(100);
+	const unsigned long TimerPeriod = 1;
+	TimerSet(TimerPeriod);
 	TimerOn();
 	Three_State = Three_SMStart;
 	Blink_State = Blink_SMStart;
@@ -178,7 +185,7 @@ int main(void) {
 		if(Three_Time >= 300){
 			Tick_Three();
 			Three_Time = 0;
-		}if(Blink_Time >= 100){
+		}if(Blink_Time >= 1000){
 			Tick_Blink();
 			Blink_Time = 0;
 		}
