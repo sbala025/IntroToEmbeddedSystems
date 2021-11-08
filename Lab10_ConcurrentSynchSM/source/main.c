@@ -92,7 +92,7 @@ void Tick_Blink(){
 		case Off:
 			Blink_State = On; break;
 		case On:
-			Blink_State = Off break;;
+			Blink_State = Off; break;
 		default:
 			Blink_State = Off; break;
 	}
