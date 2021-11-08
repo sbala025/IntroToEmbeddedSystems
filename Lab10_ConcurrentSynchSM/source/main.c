@@ -137,11 +137,12 @@ void Tick_Speaker(){
 			speaker_counter = 0x00;
 			break;
 		case S_On:
-			if(speaker_counter < 2){speaker_output == 0x10;}
-			else if(speaker_counter < 4){speaker_output == 0x00;}
+			speaker_counter++; 
+			if(speaker_counter <= 2){speaker_output == 0x10;}
+			else if(speaker_counter <= 4){speaker_output == 0x00;}
 			else{speaker_counter = 0x00;}
 
-			speaker_counter++; break;
+			//speaker_counter++; break;
 			break;
 		default:
 			break;
