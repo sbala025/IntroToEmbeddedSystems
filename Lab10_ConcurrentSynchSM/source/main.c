@@ -168,8 +168,8 @@ int main(void) {
     	/* Insert your solution below */
     	unsigned long Blink_Time = 0;
 	unsigned long Three_Time = 0;
-	const unsigned long TimerPeriod = 100;
-	TimerSet(100);
+	const unsigned long TimerPeriod = 1;
+	TimerSet(TimerPeriod);
 	TimerOn();
 	Three_State = Three_SMStart;
 	Blink_State = Blink_SMStart;
