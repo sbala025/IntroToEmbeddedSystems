@@ -133,10 +133,12 @@ void Tick_Speaker(){
 			speaker_output = 0x00;
 			speaker_counter = 0x00;
 		case S_On:
-			if(speaker_counter < 2){speaker_output == 0x10;}
-			else if(speaker_counter < 4){speaker_output == 0x00;}
-			else{speaker_counter = 0x00;}
-			speaker_counter++;
+//			if(speaker_counter < 2){speaker_output == 0x10;}
+//			else if(speaker_counter < 4){speaker_output == 0x00;}
+//			else{speaker_counter = 0x00;}
+//
+//			speaker_counter++; break;
+			break;
 		default:
 			break;
 	}			
@@ -155,7 +157,7 @@ void Tick_Combine(){
 		case Combine_SMStart:
 			break;
 		case comb:
-			output = blink_output | three_output | speaker_output; break;
+			output = blink_output | three_output | 0x10; break;
 		default:
 			break;
 	}
