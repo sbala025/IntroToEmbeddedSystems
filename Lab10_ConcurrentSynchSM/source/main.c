@@ -143,7 +143,7 @@ int main(void) {
 		if(Three_Time >= 300){
 			Tick_Three();
 			Three_Time = 0;
-		}if(Blink_Time >= 100){
+		}if(Blink_Time >= 1000){
 			Tick_Blink();
 			Blink_Time = 0;
 		}Tick_Combine();
