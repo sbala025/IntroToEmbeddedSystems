@@ -1,6 +1,4 @@
-# University of California, Riverside
-# CS120B Makefile
-MMCU=atmega1284
+MMCU=atmega1284p
 FREQ=8000000
 
 PATHB=build/
@@ -14,40 +12,31 @@ SOURCES=$(wildcard $(PATHS)*.c)
 OBJS=$(patsubst $(PATHS)%,$(PATHO)%,$(SOURCES:.c=.o))
 
 CLEAN=rm -rf
-# Simulator
-SIMAVRDIR=/usr/csshare/pkgs/simavr
+SIMAVRDIR=/usr/local/bin
 SIMAVR=simavr
-
-# Compiler
 AVR=avr-gcc
 DEBUGFLAGS=-g -O0
 SIMFLAGS=-D_SIMULATE_
-# Place the section past the end of reachable memory
 MMCUSECTION=-Wl,--undefined=_mmcu,--section-start=.mmcu=910000 
 FLAGS=-Wall -mmcu=$(MMCU) $(MMCUSECTION)
 INCLUDES=-I./$(PATHH) -I$(SIMAVRDIR)
 OBJCOPY=avr-objcopy
 OBJFLAGS=-j .text -j .data -O ihex
-# Debugger
-GDB=avr-gdb
-# GDB Testing
+GDB=~/gdb-9.2/gdb/gdb
 WHILELINENO=$$(grep -n -m 1 "while\s*(1)" source/main.c | cut -f1 -d:)
 GDBCOMMANDS=$(PATHT)commands.gdb
 GDBSCRIPT=$(PATHT)tests.gdb
 INITGDBDEBUGGER=$(PATHT)initDebugger.gdb
 GDBTESTING=-batch -x $(GDBCOMMANDS) -x $(INITGDBDEBUGGER) -x $(GDBSCRIPT)
 GDBDEBUGGING=-x $(GDBCOMMANDS) -x $(INITGDBDEBUGGER)
-# Python testing
 PYTESTRUNNER=$(PATHT)testRunner.py
 PYTESTS=$(PATHT)tests.py
 PYTESTCMD=runTests
 PYTESTING=-batch -x $(PYTESTS) -x $(PYTESTRUNNER) -ex $(PYTESTCMD)
 PYDEBUGGING=-x $(PYTESTS) -x $(PYTESTRUNNER)
-# Programmer
 PROGRAM=avrdude
 PROGRAMMER=atmelice_isp
 MEMORY=flash
-#mem:op:file where op is (w)rite, (r)ead, (v)erify; performed in the order specified
 VERBOSITY=#-v -v ... etc. to have more verbose output. Normal output is usually enough unless something goes wrong. 
 ADDVERBOSITY=$(info Add additional -v to the \"avrdude -c ...\" command above for more details on the error)
 HIGH=hfuse
@@ -63,34 +52,35 @@ RAW=m
 
 .PHONY: defaultFuses verifyFuses fuses disableJTAG clean test program debug pytest pydebug
 all: $(PATHB)main.hex
+createPaths:
+	@if [ ! -d "$(PATHO)" ]; then mkdir -p "$(PATHO)" ; fi
+	@if [ ! -d "$(PATHR)" ]; then mkdir -p "$(PATHR)" ; fi
 
 verifyFuses: 
-	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(HIGH):r:-:$(HEX) -U $(LOW):r:-:$(HEX) || $(ADDVERBOSITY)
+	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(HIGH):r:-:$(HEX) -U $(LOW):r:-:$(HEX) #|| $(ADDVERBOSITY)
 
 defaultFuses: 
-	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(HIGH):w:$(HDEFAULT):$(RAW) -U $(LOW):w:$(LDEFAULT):$(RAW) || $(ADDVERBOSITY)
+	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(HIGH):w:$(HDEFAULT):$(RAW) -U $(LOW):w:$(LDEFAULT):$(RAW) #|| $(ADDVERBOSITY)
 
 fuses: 
-	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(HIGH):w:$(H120):$(RAW) -U $(LOW):w:$(L120):$(RAW) || $(ADDVERBOSITY)
-
-# Disable just the JTAG fuse
+	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(HIGH):w:$(H120):$(RAW) -U $(LOW):w:$(L120):$(RAW) #|| $(ADDVERBOSITY)
 disableJTAG: 
-	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(HIGH):r:$(HTXT):$(HEX) || $(ADDVERBOSITY)
+	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(HIGH):r:$(HTXT):$(HEX) #|| $(ADDVERBOSITY)
 	@read -n 4 c < $(HTXT);echo -n "0x" > $(HTXT);echo "obase=16; $$(($$c | $(JTAGEN)))" | bc >> $(HTXT)
 	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(HIGH):w:$(HTXT):$(HEX) 
 	@rm -f $(HTXT)
 
 program: $(PATHB)main.hex
-	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(MEMORY):w:$< || $(ADDVERBOSITY)
+	$(PROGRAM) -c $(PROGRAMMER) -p $(MMCU) $(VERBOSITY) -U $(MEMORY):w:$< #|| $(ADDVERBOSITY)
 
 debug: $(PATHO)main.elf
-	@sed -i "s/break main.c:.*/break main.c:$(WHILELINENO)/" $(INITDEBUGGER)
+	@sed -i "s/break main.c:.*/break main.c:$(WHILELINENO)/" $(INITGDBDEBUGGER)
 	$(SIMAVR) -g -mmcu=$(MMCU) -f $(FREQ) $< &
 	-$(GDB) $(GDBDEBUGGING)
 	@pkill simavr
 
 test: $(PATHO)main.elf
-	@sed -i "s/break main.c:.*/break main.c:$(WHILELINENO)/" $(INITDEBUGGER)
+	@sed -i "s/break main.c:.*/break main.c:$(WHILELINENO)/" $(INITGDBDEBUGGER)
 	$(SIMAVR) -g -mmcu=$(MMCU) -f $(FREQ) $< &
 	-$(GDB) $(GDBTESTING)
 	@pkill simavr
@@ -108,10 +98,10 @@ pydebug: $(PATHO)main.elf
 $(PATHB)main.hex: $(PATHO)main.elf
 	@$(OBJCOPY) $(OBJFLAGS) $< $@
 
-$(PATHO)main.elf: $(OBJS)
+$(PATHO)main.elf: $(OBJS) | createPaths
 	@$(AVR) $(DEBUGFLAGS) $(SIMFLAGS) $(FLAGS) $(INCLUDES) -o $@ $^
 
-$(PATHO)%.o: $(PATHS)%.c
+$(PATHO)%.o: $(PATHS)%.c | createPaths
 	@$(AVR) $(DEBUGFLAGS) $(SIMFLAGS) $(FLAGS) $(INCLUDES) -c -o $@ $<
 
 clean:
