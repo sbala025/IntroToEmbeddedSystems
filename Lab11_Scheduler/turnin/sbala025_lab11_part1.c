@@ -33,7 +33,7 @@ unsigned long int findGCD(unsigned long int a, unsigned long int b)
 }
 
 /*--------TASK SCHEDULER----------------------------------------*/
-typedef struct _task {
+typedef struct task {
 	signed char state;
 	unsigned long int period;
 	unsigned long int elapsedTime;
@@ -41,13 +41,14 @@ typedef struct _task {
 } task;
 
 /*--------FSM---------------------------------------------------*/
-enum Keypad{Start, key}k_state;
+enum Keypad{ key}k_state;
+unsigned char x;
 
 int Keypad_Tick(int state){
-	unsigned char x;	
+	//unsigned char x;	
 	x = GetKeypadKey();
 	switch(k_state){
-		case Start:k_state = key; break;
+	//	case Start:k_state = key; break;
 		case key:
 			switch(x) {
 				case '\0': 	keypad = 0x1F; break;
@@ -77,8 +78,10 @@ int Keypad_Tick(int state){
 /*--------MAIN--------------------------------------------------*/
 int main(void) {
 	/* Insert DDR and PORT initializations */
+	DDRA = 0X00; PORTA = 0XFF;
 	DDRB = 0xFF; PORTB = 0x00;
 	DDRC = 0xF0; PORTC = 0x0F;
+	DDRD = 0XFF; PORTD = 0X00;
 	/* Insert your solution below */
 	static task task1;
     	task *tasks[] = { &task1 };
