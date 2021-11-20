@@ -54,6 +54,7 @@ void adc_init(){
 
 /*------Joystick Functions---------------------------------------------------------------------------------------------------------------------*/
 unsigned char JoystickPos(unsigned char x, unsigned char y)}
+unsigned short LeftRightRAW, UpDownRAW;
 void adc_init(){
 	ADMUX = (1<<REFS0);
 	ADCSRA = (1<<ADEN)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
@@ -148,6 +149,11 @@ int main(void) {
 	TimerSet(1000);
 	TimerOn();	 
    	while (1) {
+		LeftRightRAW = adc_read(0);
+        	LeftRight = ADC_Scaler(LR_ADC_MAX, LeftRightRAW, 3);
+
+        	UpDownRAW =  adc_read(1);
+        	UpDown = ADC_Scaler(UD_ADC_MAX, UpDownRAW, 3);
 		Tick();
 		while(!TimerFlag) {};
 		TimerFlag = 0;
