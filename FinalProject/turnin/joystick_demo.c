@@ -148,7 +148,8 @@ int main(void) {
     	/* Insert your solution below */
 	TimerSet(1000);
 	TimerOn();	 
-   	while (1) {
+   	adc_init();
+	while (1) {
 		LeftRightRAW = adc_read(0);
         	LeftRight = ADC_Scaler(LR_ADC_MAX, LeftRightRAW, 3);
 
